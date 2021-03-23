@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import { TimerPopoverComponent } from '../timer-popover/timer-popover.component';
 
 @NgModule({
   imports: [
@@ -15,6 +14,6 @@ import { TimerPopoverComponent } from '../timer-popover/timer-popover.component'
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, TimerPopoverComponent]
+  declarations: [TabsPage]
 })
 export class TabsPageModule {}

@@ -1,17 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Nuevo
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-item>
+    <ion-label>Horas</ion-label>
+    <ion-select [(ngModel)]="hour" mode="ios" name="hours" id="hours" (ionChange)="hourChangeHandler($event)">
+      <ion-select-option *ngFor="let hour of hours; index as i" (value)="hour">{{ hour.toLocaleString(undefined, { minimumIntegerDigits: 2 }) }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Minutos</ion-label>
+    <ion-select [(ngModel)]="minute" mode="ios" name="minutes" id="minutes" (ionChange)="minuteChangeHandler($event)">
+        <ion-select-option *ngFor="let minute of minutes; index as i" (value)="minute">{{ minute.toLocaleString(undefined, { minimumIntegerDigits: 2 }) }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Segundos</ion-label>
+    <ion-select [(ngModel)]="second" mode="ios" name="seconds" id="seconds" (ionChange)="secondChangeHandler($event)">
+        <ion-select-option *ngFor="let second of seconds; index as i" (value)="second">{{ second.toLocaleString(undefined, { minimumIntegerDigits: 2 }) }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="buttons">
+    <ion-button color="success" (click)="addCounter(hour, minute, second)">Agregar</ion-button>
+    <ion-button color="warning">Guardar</ion-button>
+  </div>
 </ion-content>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { TimerPopoverComponent } from '../timer-popover/timer-popover.component';
+import { TimerService } from '../services/timer.service';
 
 @Component({
   selector: 'app-tabs',
@@ -9,16 +8,9 @@ import { TimerPopoverComponent } from '../timer-popover/timer-popover.component'
 })
 export class TabsPage {
 
-  constructor(public popoverController: PopoverController) {}
+  constructor(private timerService: TimerService) {}
 
-  async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: TimerPopoverComponent,
-      mode: 'ios',
-      // cssClass: 'my-custom-class',
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
+  private async openPicker() {
+    await this.timerService.createTimerPicker();
   }
 }

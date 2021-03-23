@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TimerPopoverComponent } from './timer-popover.component';
+import { TimerCardComponent } from './timer-card.component';
 
-describe('TimerPopoverComponent', () => {
-  let component: TimerPopoverComponent;
-  let fixture: ComponentFixture<TimerPopoverComponent>;
+describe('TimerCardComponent', () => {
+  let component: TimerCardComponent;
+  let fixture: ComponentFixture<TimerCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimerPopoverComponent ],
+      declarations: [ TimerCardComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TimerPopoverComponent);
+    fixture = TestBed.createComponent(TimerCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

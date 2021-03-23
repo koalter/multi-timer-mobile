@@ -1,4 +1,4 @@
 export default class Counter {
-    seconds: number;
-    interval;
+    title?: string;
+    endTime: string;
 }

@@ -1,18 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Dashboard
+      Inicio
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let counter of timerService.counterList">
-    <ion-card-header>
-      <ion-card-title>New Timer</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{ toTimeString(counter) }}
-    </ion-card-content>
-  </ion-card>
+  <app-timer-card 
+    *ngFor="let counter of timerService.counterList" 
+    [title]="counter.title" 
+    [time]="counter.endTime"
+  ></app-timer-card>
 </ion-content>
