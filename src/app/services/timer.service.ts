@@ -14,7 +14,6 @@ export class TimerService {
   seconds: number = 60;
 
   counterList: Counter[] = [];
-  counterListIndex = 0; //TODO: delete
   
   constructor(private pickerController: PickerController,
               private router: Router) { }
@@ -33,8 +32,6 @@ export class TimerService {
       newList.push(timer);
       
       this.counterList = newList;
-      this.setInterval(timer);
-      
       return true;
     }
     return false;
@@ -88,16 +85,5 @@ export class TimerService {
     }
 
     return options;
-  }
-
-  private setInterval(counter: Counter): void {
-    const endTime = new Date(counter.endTime);
-    
-    let interval = setInterval(() => {
-      if (Math.floor(Date.parse(endTime.toISOString())/1000 + 10) - Math.floor(Date.now()/1000) <= 0) {
-        this.counterList.shift(); // Deberia eliminar el indice al que corresponde, no el primer indice
-        clearInterval(interval);
-      }
-    }, 1000);
   }
 }

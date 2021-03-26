@@ -8,8 +8,23 @@
 
 <ion-content [fullscreen]="true">
   <app-timer-card 
-    *ngFor="let counter of timerService.counterList" 
-    [title]="counter.title" 
-    [time]="counter.endTime"
+  *ngFor="let counter of timerService.counterList" 
+  [title]="counter.title" 
+  [time]="counter.endTime"
   ></app-timer-card>
+  <ion-card class="flex-column" color="light" *ngIf="timerService.counterList.length === 0">
+    <ion-title>Agregá un temporizador</ion-title>
+    <div class="flex">
+      <ion-item color="light">
+        <ion-input [(ngModel)]="hours" class="box-input" type="number"></ion-input>
+      </ion-item>
+      <ion-item color="light">
+        <ion-input [(ngModel)]="minutes" class="box-input" type="number"></ion-input>
+      </ion-item>
+      <ion-item color="light">
+        <ion-input [(ngModel)]="seconds" class="box-input" type="number"></ion-input>
+      </ion-item>
+    </div>
+    <ion-button color="success" shape="round" (click)="btn_Agregar()">Agregar</ion-button>
+  </ion-card>
 </ion-content>
