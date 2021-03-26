@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import Counter from '../models/Counter';
 
 @Component({
   selector: 'app-timer-card',
@@ -7,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TimerCardComponent implements OnInit {
 
-  @Input() title: string;
-  @Input() time: string;
+  @Input() counter: Counter;
+  @Output() dismissEvent: EventEmitter<Counter> = new EventEmitter<Counter>();
 
   constructor() { }
 
@@ -30,5 +31,9 @@ export class TimerCardComponent implements OnInit {
 
     const convertedString = `${hours}:${minutes}:${seconds}`;
     return convertedString;
+  }
+
+  btn_descartar_click() {
+    this.dismissEvent.emit(this.counter);
   }
 }

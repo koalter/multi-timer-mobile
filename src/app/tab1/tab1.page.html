@@ -24,7 +24,7 @@
   </ion-card>
   <app-timer-card 
   *ngFor="let counter of timerService.counterList" 
-  [title]="counter.title" 
-  [time]="counter.endTime"
+  (dismissEvent)="dismiss(counter)"
+  [counter]="counter"
   ></app-timer-card>
 </ion-content>
