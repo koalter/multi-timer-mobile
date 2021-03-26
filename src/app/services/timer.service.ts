@@ -44,13 +44,14 @@ export class TimerService {
 
   async createTimerPicker() {
     const picker = await this.pickerController.create({
+      mode: 'ios',
       columns: this.getPickerColumns(3, [this.hours, this.minutes, this.seconds]),
       buttons: [
         {
           text: 'Aceptar',
           handler: (value) => {
             this.newTimer(value[0].text, value[1].text, value[2].text);
-            this.router.navigate(['/tabs/tab1']);
+            this.router.navigate(['']);
             picker.dismiss();
           }
         },

@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card class="flex-column" color="light" >
+  <!-- <ion-card class="flex-column" color="light" >
     <ion-title>Agregá un temporizador</ion-title>
     <div class="flex">
       <ion-item color="light">
@@ -21,10 +21,11 @@
       </ion-item>
     </div>
     <ion-button color="success" shape="round" (click)="btn_Agregar()">Agregar</ion-button>
-  </ion-card>
+  </ion-card> -->
   <app-timer-card 
   *ngFor="let counter of timerService.counterList" 
   (dismissEvent)="dismiss(counter)"
   [counter]="counter"
   ></app-timer-card>
+  <timer-fab [vertical]="'bottom'" [horizontal]="'center'" [slot]="'fixed'"></timer-fab>
 </ion-content>

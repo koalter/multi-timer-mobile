@@ -7,6 +7,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { TimerCardComponent } from '../timer-card/timer-card.component';
+import { TimerFabComponent } from '../timer-fab/timer-fab.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { TimerCardComponent } from '../timer-card/timer-card.component';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page, TimerCardComponent]
+  declarations: [Tab1Page, TimerCardComponent, TimerFabComponent]
 })
 export class Tab1PageModule {}
