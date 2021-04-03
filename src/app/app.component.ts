@@ -9,13 +9,14 @@ import { TimerService } from './services/timer.service';
 export class AppComponent {
 
   constructor(private timerService: TimerService) {
+    const duration = 21; //time for alarm sound, refactor later
     const timer = setInterval(() => {
       console.log(new Date(Date.now()).toTimeString())
       for (let counter of this.timerService.counterList) {
-        if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000) - Math.floor(Date.now()/1000) <= 0) this.timerService.audio.play().then(() => {
-          if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000 + 10) - Math.floor(Date.now()/1000) <= 0) {
-            this.timerService.audio.pause();
-            this.timerService.counterList.splice(this.timerService.counterList.findIndex(c => c === counter), 1);
+        if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000) - Math.floor(Date.now()/1000) <= 0) this.timerService.audio.play()
+        .then(() => {
+          if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000 + duration) - Math.floor(Date.now()/1000) <= 0) {
+            this.timerService.dismiss(counter);
           }
         });
       }

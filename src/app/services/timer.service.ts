@@ -14,7 +14,7 @@ export class TimerService {
   seconds: number = 60;
 
   counterList: Counter[] = [];
-  audio: HTMLAudioElement = new Audio('../assets/bensound-creativeminds.mp3');
+  audio: HTMLAudioElement = new Audio('../assets/Kaibu.mp3');
 
   constructor(private pickerController: PickerController,
               private router: Router) { }

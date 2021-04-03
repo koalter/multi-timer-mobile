@@ -71,6 +71,7 @@ export class Tab2Page {
         animated: true,
         buttons: ['OK', 'Cancelar'],
         header: 'Guardar temporizador',
+        subHeader: '(no implementado)',
         inputs: [
           {
             name: 'Titulo',
