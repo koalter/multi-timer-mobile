@@ -23,4 +23,8 @@ export class Tab1Page {
     this.minutes = '';
     this.seconds = '';
   }
+
+  private dismiss(counter: Counter) {
+    this.timerService.dismiss(counter);
+  }
 }

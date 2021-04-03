@@ -14,7 +14,8 @@ export class TimerService {
   seconds: number = 60;
 
   counterList: Counter[] = [];
-  
+  audio: HTMLAudioElement = new Audio('../assets/bensound-creativeminds.mp3');
+
   constructor(private pickerController: PickerController,
               private router: Router) { }
 
@@ -61,6 +62,12 @@ export class TimerService {
     });
     
     await picker.present();
+  }
+
+  public dismiss(counter: Counter) {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    return this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
   }
 
   private getPickerColumns(numColumns, numOptions) {
