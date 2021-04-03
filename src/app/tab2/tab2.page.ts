@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import Counter from '../models/Counter';
 import { TimerService } from '../services/timer.service';
 
@@ -23,6 +23,7 @@ export class Tab2Page {
 
   constructor(private timerService: TimerService, 
               private toastController: ToastController,
+              private alertController: AlertController,
               private router: Router) {}
 
   ngOnInit(): void {
@@ -53,6 +54,31 @@ export class Tab2Page {
       this.minute = '00';
       this.second = '00';
       this.router.navigate(['/tabs/tab1']);
+    } else {
+      this.toastController.create({
+        message: '¡Seleccione el tiempo de su temporizador!',
+        duration: 5000,
+        mode: 'ios',
+        color: 'dark',
+        position: 'top'
+      }).then(toast => toast.present());
+    }
+  }
+
+  openSaveAlert() {
+    if (parseInt(this.hour) || parseInt(this.minute) || parseInt(this.second)) {
+      this.alertController.create({
+        animated: true,
+        buttons: ['OK', 'Cancelar'],
+        header: 'Guardar temporizador',
+        inputs: [
+          {
+            name: 'Titulo',
+            type: 'text',
+            placeholder: 'Ingrese el titulo'
+          }
+        ]
+      }).then(alert => alert.present());
     } else {
       this.toastController.create({
         message: '¡Seleccione el tiempo de su temporizador!',
