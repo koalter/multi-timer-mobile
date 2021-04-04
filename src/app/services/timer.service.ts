@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PickerController } from '@ionic/angular';
 import { of } from 'rxjs';
 import Counter from '../models/Counter';
+import Preset from '../models/Preset';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ export class TimerService {
   seconds: number = 60;
 
   counterList: Counter[] = [];
+  presetList: Preset[] = [];
   audio: HTMLAudioElement = new Audio('../assets/Kaibu.mp3');
 
   constructor(private pickerController: PickerController,
               private router: Router) { }
 
-  newTimer(hour: string, minute: string, second: string): boolean {
+  newTimer(hour: string, minute: string, second: string, title?: string): boolean {
     let newList = this.counterList.slice();
     let timer: Counter;
     
@@ -28,6 +30,7 @@ export class TimerService {
       const endTime = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), startTime.getHours() + parseInt(hour), startTime.getMinutes() + parseInt(minute), startTime.getSeconds() + parseInt(second));
       
       timer = {
+        title: title,
         endTime: endTime.toISOString()
       };
       newList.push(timer);
@@ -38,8 +41,27 @@ export class TimerService {
     return false;
   }
 
+  newPreset(title: string, hours: number, minutes: number, seconds: number) {
+    this.presetList.push({
+      title: title,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
+    });
+  }
+
   setTimers() {
     return of(this.counterList);
+  }
+  
+  public dismiss(counter: Counter) {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    return this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+  }
+
+  public removePreset(preset: Preset) {
+    return this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
   }
 
   async createTimerPicker() {
@@ -62,12 +84,6 @@ export class TimerService {
     });
     
     await picker.present();
-  }
-
-  public dismiss(counter: Counter) {
-    this.audio.pause();
-    this.audio.currentTime = 0;
-    return this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
   }
 
   private getPickerColumns(numColumns, numOptions) {

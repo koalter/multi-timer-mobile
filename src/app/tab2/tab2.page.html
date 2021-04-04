@@ -29,4 +29,11 @@
     <ion-button shape="round" color="success" (click)="addCounter(hour, minute, second)">Agregar</ion-button>
     <ion-button shape="round" color="warning" (click)="openSaveAlert()">Guardar</ion-button>
   </div>
+
+  <ng-template ngFor let-preset [ngForOf]="timerService.presetList">
+    <ion-chip color="primary">
+      <ion-label (click)="addCounter(preset.hours.toString(), preset.minutes.toString(), preset.seconds.toString(), preset.title)">{{ preset.title }}</ion-label>
+      <ion-icon (click)="removePreset(preset)" name="close-circle"></ion-icon>
+    </ion-chip>
+  </ng-template>
 </ion-content>

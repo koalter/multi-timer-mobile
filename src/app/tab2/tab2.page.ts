@@ -48,8 +48,12 @@ export class Tab2Page {
     this.second = e.target.value;
   }
 
-  addCounter(hour: string, minute: string, second: string) {
-    if (this.timerService.newTimer(hour, minute, second)) {
+  removePreset(preset) {
+    this.timerService.removePreset(preset);
+  }
+
+  addCounter(hours, minutes, seconds, title?) {
+    if (this.timerService.newTimer(hours, minutes, seconds, title)) {
       this.hour = '00';
       this.minute = '00';
       this.second = '00';
@@ -66,15 +70,29 @@ export class Tab2Page {
   }
 
   openSaveAlert() {
-    if (parseInt(this.hour) || parseInt(this.minute) || parseInt(this.second)) {
+    const hours = parseInt(this.hour);
+    const minutes = parseInt(this.minute);
+    const seconds = parseInt(this.second);
+
+    if (hours || minutes || seconds) {
       this.alertController.create({
         animated: true,
-        buttons: ['OK', 'Cancelar'],
+        buttons: [
+          {
+            text: 'OK',
+            handler: (value) => {
+              if (value)
+                this.timerService.newPreset(value.title || `${this.hour}:${this.minute}:${this.second}`, hours, minutes, seconds)
+            }
+          },
+          {
+            text: 'Cancelar',
+            role: 'cancel'
+          }],
         header: 'Guardar temporizador',
-        subHeader: '(no implementado)',
         inputs: [
           {
-            name: 'Titulo',
+            name: 'title',
             type: 'text',
             placeholder: 'Ingrese el titulo'
           }
