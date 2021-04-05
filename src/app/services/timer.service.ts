@@ -61,11 +61,13 @@ export class TimerService {
   public dismiss(counter: Counter) {
     this.audio.pause();
     this.audio.currentTime = 0;
-    return this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+    this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+    this.databaseService.saveCounters(this.counterList);
   }
 
   public removePreset(preset: Preset) {
-    return this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
+    this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
+    this.databaseService.savePresets(this.presetList);
   }
 
   async createTimerPicker() {

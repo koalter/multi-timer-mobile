@@ -10,12 +10,8 @@ export class DatabaseService {
   constructor() { 
     if (!localStorage)
       console.error('Database connection unsuccessful!');
-    else {
+    else
       console.log('Database connected successfully!');
-      
-    console.log(localStorage);
-    }
-
   }
 
   saveCounters(counters: Counter[]) {
