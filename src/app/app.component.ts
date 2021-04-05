@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatabaseService } from './services/database.service';
 import { TimerService } from './services/timer.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { TimerService } from './services/timer.service';
 })
 export class AppComponent {
 
-  constructor(private timerService: TimerService) {
+  constructor(private timerService: TimerService,
+              private databaseService: DatabaseService) {
     const duration = 21; //time for alarm sound, refactor later
     const timer = setInterval(() => {
       console.log(new Date(Date.now()).toTimeString())
