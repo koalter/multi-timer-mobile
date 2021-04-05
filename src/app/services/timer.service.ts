@@ -4,6 +4,7 @@ import { PickerController } from '@ionic/angular';
 import { of } from 'rxjs';
 import Counter from '../models/Counter';
 import Preset from '../models/Preset';
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class TimerService {
   minutes: number = 60;
   seconds: number = 60;
 
-  counterList: Counter[] = [];
-  presetList: Preset[] = [];
+  counterList: Counter[] = this.databaseService.getCounters();
+  presetList: Preset[] = this.databaseService.getPresets();
   audio: HTMLAudioElement = new Audio('../assets/Kaibu.mp3');
 
   constructor(private pickerController: PickerController,
-              private router: Router) { }
+              private router: Router,
+              private databaseService: DatabaseService) { }
 
   newTimer(hour: string, minute: string, second: string, title?: string): boolean {
-    let newList = this.counterList.slice();
     let timer: Counter;
     
     if (parseInt(second) > 0 || parseInt(minute) > 0 || parseInt(hour) > 0) {
@@ -33,21 +34,24 @@ export class TimerService {
         title: title,
         endTime: endTime.toISOString()
       };
-      newList.push(timer);
-      
-      this.counterList = newList;
+
+      this.counterList.push(timer);
+      this.databaseService.saveCounters(this.counterList);
       return true;
     }
     return false;
   }
 
   newPreset(title: string, hours: number, minutes: number, seconds: number) {
-    this.presetList.push({
+    const preset: Preset = {
       title: title,
       hours: hours,
       minutes: minutes,
       seconds: seconds
-    });
+    }
+
+    this.presetList.push(preset);
+    this.databaseService.savePresets(this.presetList);
   }
 
   setTimers() {
@@ -57,11 +61,13 @@ export class TimerService {
   public dismiss(counter: Counter) {
     this.audio.pause();
     this.audio.currentTime = 0;
-    return this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+    this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+    this.databaseService.saveCounters(this.counterList);
   }
 
   public removePreset(preset: Preset) {
-    return this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
+    this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
+    this.databaseService.savePresets(this.presetList);
   }
 
   async createTimerPicker() {
