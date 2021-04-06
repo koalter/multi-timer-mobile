@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DatabaseService } from './services/database.service';
-import { TimerService } from './services/timer.service';
+import { DatabaseService } from './services/dummy/database.service';
+import { TimerService } from './services/dummy/timer.service';
 
 @Component({
   selector: 'app-root',

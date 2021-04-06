@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import Counter from '../models/Counter';
-import { TimerService } from '../services/timer.service';
+import { TimerService } from '../services/dummy/timer.service';
 
 @Component({
   selector: 'app-tab2',

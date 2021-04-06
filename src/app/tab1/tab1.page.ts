@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import Counter from '../models/Counter';
-import { TimerService } from '../services/timer.service';
+import { TimerService } from '../services/dummy/timer.service';
 
 @Component({
   selector: 'app-tab1',

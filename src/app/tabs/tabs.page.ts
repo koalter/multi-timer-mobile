@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TimerService } from '../services/timer.service';
+import { TimerService } from '../services/dummy/timer.service';
 
 @Component({
   selector: 'app-tabs',
