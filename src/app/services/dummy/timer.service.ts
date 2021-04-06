@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { PickerController } from '@ionic/angular';
 import { of } from 'rxjs';
 import Counter from '../../models/Counter';
 import Preset from '../../models/Preset';
@@ -11,17 +9,11 @@ import { DatabaseService } from './database.service';
 })
 export class TimerService {
 
-  hours: number = 24;
-  minutes: number = 60;
-  seconds: number = 60;
-
   counterList: Counter[] = this.databaseService.getCounters();
   presetList: Preset[] = this.databaseService.getPresets();
   audio: HTMLAudioElement = new Audio('../assets/Kaibu.mp3');
 
-  constructor(private pickerController: PickerController,
-              private router: Router,
-              private databaseService: DatabaseService) { }
+  constructor(private databaseService: DatabaseService) { }
 
   newTimer(hour: string, minute: string, second: string, title?: string): boolean {
     let timer: Counter;
@@ -68,51 +60,5 @@ export class TimerService {
   public removePreset(preset: Preset) {
     this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
     this.databaseService.savePresets(this.presetList);
-  }
-
-  async createTimerPicker() {
-    const picker = await this.pickerController.create({
-      columns: this.getPickerColumns(3, [this.hours, this.minutes, this.seconds]),
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: (value) => {
-            this.newTimer(value[0].text, value[1].text, value[2].text);
-            this.router.navigate(['/tabs/tab1']);
-            picker.dismiss();
-          }
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        }
-      ]
-    });
-    
-    await picker.present();
-  }
-
-  private getPickerColumns(numColumns, numOptions) {
-    let columns = [];
-    for (let i = 0; i < numColumns; i++) {
-      columns.push({
-        name: i,
-        options: this.getColumnOptions(numOptions[i])
-      });
-    }
-
-    return columns;
-  }
-
-  private getColumnOptions(numOptions) {
-    let options = [];
-    for (let i = 0; i < numOptions; i++) {
-      options.push({
-        text: i.toLocaleString(undefined, {minimumIntegerDigits: 2}),
-        value: i
-      })
-    }
-
-    return options;
   }
 }

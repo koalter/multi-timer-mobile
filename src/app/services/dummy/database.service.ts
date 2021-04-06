@@ -7,11 +7,10 @@ import Preset from '../../models/Preset';
 })
 export class DatabaseService {
 
-  constructor() { 
-    if (!localStorage)
-      console.error('Database connection unsuccessful!');
-    else
-      console.log('Database connected successfully!');
+  constructor() { }
+
+  initDatabase() {
+    return localStorage;
   }
 
   public saveCounters(counters: Counter[]) {

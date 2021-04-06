@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import Counter from '../models/Counter';
 import { TimerService } from '../services/dummy/timer.service';
+import { ErrorService } from '../services/error.service';
+import { PresetAlertService } from '../services/preset-alert.service';
 
 @Component({
   selector: 'app-tab2',
@@ -21,9 +23,10 @@ export class Tab2Page {
   minute: string = '00';
   second: string = '00';
 
-  constructor(private timerService: TimerService, 
+  constructor(private timerService: TimerService,
+              private presetAlertService: PresetAlertService,
+              private errorService: ErrorService,
               private toastController: ToastController,
-              private alertController: AlertController,
               private router: Router) {}
 
   ngOnInit(): void {
@@ -59,13 +62,7 @@ export class Tab2Page {
       this.second = '00';
       this.router.navigate(['/tabs/tab1']);
     } else {
-      this.toastController.create({
-        message: '¡Seleccione el tiempo de su temporizador!',
-        duration: 5000,
-        mode: 'ios',
-        color: 'dark',
-        position: 'top'
-      }).then(toast => toast.present());
+      this.errorService.createErrorToast('¡Seleccione el tiempo de su temporizador!');
     }
   }
 
@@ -75,37 +72,9 @@ export class Tab2Page {
     const seconds = parseInt(this.second);
 
     if (hours || minutes || seconds) {
-      this.alertController.create({
-        animated: true,
-        buttons: [
-          {
-            text: 'OK',
-            handler: (value) => {
-              if (value)
-                this.timerService.newPreset(value.title || `${this.hour}:${this.minute}:${this.second}`, hours, minutes, seconds)
-            }
-          },
-          {
-            text: 'Cancelar',
-            role: 'cancel'
-          }],
-        header: 'Guardar temporizador',
-        inputs: [
-          {
-            name: 'title',
-            type: 'text',
-            placeholder: 'Ingrese el titulo'
-          }
-        ]
-      }).then(alert => alert.present());
+      this.presetAlertService.createPresetAlert(hours, minutes, seconds);
     } else {
-      this.toastController.create({
-        message: '¡Seleccione el tiempo de su temporizador!',
-        duration: 5000,
-        mode: 'ios',
-        color: 'dark',
-        position: 'top'
-      }).then(toast => toast.present());
+      this.errorService.createErrorToast('¡Seleccione el tiempo de su temporizador!');
     }
   }
 }

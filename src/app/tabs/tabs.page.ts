@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TimerService } from '../services/dummy/timer.service';
+import { TimerPickerService } from '../services/timer-picker.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,9 +8,9 @@ import { TimerService } from '../services/dummy/timer.service';
 })
 export class TabsPage {
 
-  constructor(private timerService: TimerService) {}
+  constructor(private timerPickerService: TimerPickerService) {}
 
   private async openPicker() {
-    await this.timerService.createTimerPicker();
+    await this.timerPickerService.createTimerPicker();
   }
 }
