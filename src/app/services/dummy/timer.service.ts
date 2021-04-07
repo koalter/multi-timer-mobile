@@ -28,7 +28,7 @@ export class TimerService {
       };
 
       this.counterList.push(timer);
-      this.databaseService.saveCounters(this.counterList);
+      this.databaseService.saveCounter(timer);
       return true;
     }
     return false;
@@ -43,22 +43,26 @@ export class TimerService {
     }
 
     this.presetList.push(preset);
-    this.databaseService.savePresets(this.presetList);
+    this.databaseService.savePreset(preset);
   }
 
   setTimers() {
     return of(this.counterList);
+  }
+
+  public playAudio() {
+    return this.audio.play();
   }
   
   public dismiss(counter: Counter) {
     this.audio.pause();
     this.audio.currentTime = 0;
     this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
-    this.databaseService.saveCounters(this.counterList);
+    this.databaseService.removeCounter(counter);
   }
 
   public removePreset(preset: Preset) {
     this.presetList.splice(this.presetList.findIndex(p => p === preset), 1);
-    this.databaseService.savePresets(this.presetList);
+    this.databaseService.removePreset(preset);
   }
 }

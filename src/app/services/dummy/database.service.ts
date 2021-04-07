@@ -7,18 +7,35 @@ import Preset from '../../models/Preset';
 })
 export class DatabaseService {
 
-  constructor() { }
+  constructor() {
+  }
 
   initDatabase() {
     return localStorage;
   }
 
-  public saveCounters(counters: Counter[]) {
-    localStorage.setItem('counters', JSON.stringify(counters));
+  public saveCounter(counter: Counter) {
+    let counterList = JSON.parse(localStorage.getItem('counters')) as Counter[];
+    counterList.push(counter);
+    localStorage.setItem('counters', JSON.stringify(counterList));
   }
 
-  public savePresets(presets: Preset[]) {
-    localStorage.setItem('presets', JSON.stringify(presets));
+  public savePreset(preset: Preset) {
+    let presetList = JSON.parse(localStorage.getItem('presets')) as Preset[];
+    presetList.push(preset);
+    localStorage.setItem('presets', JSON.stringify(presetList));
+  }
+
+  public removeCounter(counter: Counter) {
+    let counterList = JSON.parse(localStorage.getItem('counters')) as Counter[];
+    counterList.splice(counterList.findIndex(c => c === counter), 1);
+    localStorage.setItem('counters', JSON.stringify(counterList));
+  }
+
+  public removePreset(preset: Preset) {
+    let presetList = JSON.parse(localStorage.getItem('presets')) as Preset[];
+    presetList.splice(presetList.findIndex(p => p === preset), 1);
+    localStorage.setItem('presets', JSON.stringify(presetList));
   }
 
   public getCounters(): Counter[] {

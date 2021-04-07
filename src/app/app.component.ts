@@ -28,7 +28,7 @@ export class AppComponent {
     setInterval(() => {
       console.log(new Date(Date.now()).toTimeString())
       for (let counter of this.timerService.counterList) {
-        if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000) - Math.floor(Date.now()/1000) <= 0) this.timerService.audio.play()
+        if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000) - Math.floor(Date.now()/1000) <= 0) this.timerService.playAudio()
         .then(() => {
           if (Math.floor(Date.parse(new Date(counter.endTime).toISOString())/1000 + duration) - Math.floor(Date.now()/1000) <= 0) {
             this.timerService.dismiss(counter);

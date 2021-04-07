@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NativeAudio } from '@ionic-native/native-audio/ngx'
 import { of } from 'rxjs';
 import Counter from '../models/Counter';
 import Preset from '../models/Preset';
@@ -11,9 +12,13 @@ export class TimerService {
 
   counterList: Counter[] = this.databaseService.getCounters();
   presetList: Preset[] = this.databaseService.getPresets();
-  audio: HTMLAudioElement = new Audio('../assets/Kaibu.mp3');
 
-  constructor(private databaseService: DatabaseService) { }
+  constructor(private databaseService: DatabaseService,
+              private nativeAudio: NativeAudio) {
+    this.nativeAudio.preloadComplex('alarm', '../assets/Kaibu.mp3', 1, 1, 0)
+    .then(audio => console.log(audio))
+    .catch(err => console.error(err));
+  }
 
   newTimer(hour: string, minute: string, second: string, title?: string): boolean {
     let timer: Counter;
@@ -27,8 +32,8 @@ export class TimerService {
         endTime: endTime.toISOString()
       };
 
+      this.databaseService.saveCounter(timer);
       this.counterList.push(timer);
-      this.databaseService.saveCounters(this.counterList);
       return true;
     }
     return false;
@@ -43,18 +48,22 @@ export class TimerService {
     }
 
     this.presetList.push(preset);
-    this.databaseService.savePresets(this.presetList);
+    this.databaseService.savePreset(preset);
   }
 
   setTimers() {
     return of(this.counterList);
   }
+
+  public playAudio() {
+    return this.nativeAudio.play('alarm');
+  }
   
   public dismiss(counter: Counter) {
-    this.audio.pause();
-    this.audio.currentTime = 0;
-    this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
-    this.databaseService.saveCounters(this.counterList);
+    this.nativeAudio.stop('alarm').then(() =>{
+      this.counterList.splice(this.counterList.findIndex(c => c === counter), 1);
+      this.databaseService.saveCounters(this.counterList);
+    }).catch(err => console.error(err));
   }
 
   public removePreset(preset: Preset) {
