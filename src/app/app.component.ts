@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     try {
       await this.databaseService.initDatabase();
+      this.errorController.createErrorAlert('La base de datos se creo exitosamente');
     } catch(err) {
       this.errorController.createErrorAlert(err);
     }
