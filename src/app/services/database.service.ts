@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Plugins } from "@capacitor/core";
+// import { CapacitorSQLite } from '@capacitor-community/sqlite';
+const { CapacitorSQLite } = Plugins;
+
+import dbOptions from '../../assets/db.json';
 import Counter from '../models/Counter';
 import Preset from '../models/Preset';
 
@@ -7,36 +12,33 @@ import Preset from '../models/Preset';
 })
 export class DatabaseService {
 
-  constructor() { 
-    if (!localStorage)
-      console.error('Database connection unsuccessful!');
-    else
-      console.log('Database connected successfully!');
+  constructor() {
   }
 
-  initDatabase() {
-    return localStorage;
+  async initDatabase() {
+    try {
+      console.log(dbOptions);
+      await CapacitorSQLite.createConnection(dbOptions);
+      Promise.resolve(true);
+    } catch(err) {
+      Promise.reject(err);
+      throw err;
+    }
   }
 
   public saveCounters(counters: Counter[]) {
-    localStorage.setItem('counters', JSON.stringify(counters));
+    console.error('Not Implemented');
   }
 
   public savePresets(presets: Preset[]) {
-    localStorage.setItem('presets', JSON.stringify(presets));
+    console.error('Not Implemented');
   }
 
-  public getCounters(): Counter[] {
-    if (!localStorage.getItem('counters'))
-      localStorage.setItem('counters', JSON.stringify(new Array<Preset>()));
-
-    return JSON.parse(localStorage.getItem('counters'));
+  public getCounters() {
+    console.error('Not Implemented');
   }
 
   public getPresets() {
-    if (!localStorage.getItem('presets'))
-      localStorage.setItem('presets', JSON.stringify(new Array<Preset>()));
-
-    return JSON.parse(localStorage.getItem('presets'));
+    console.error('Not Implemented');
   }
 }

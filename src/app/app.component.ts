@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { DatabaseService } from './services/dummy/database.service';
+import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from './services/database.service';
 import { TimerService } from './services/dummy/timer.service';
 import { ErrorService } from './services/error.service';
 
@@ -8,18 +8,26 @@ import { ErrorService } from './services/error.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(private errorController: ErrorService,
               private timerService: TimerService,
               private databaseService: DatabaseService) {
-    if (this.databaseService.initDatabase()) {
-      this.initTimer();
-      console.log('Database connected successfully!');
-    }
-    else {
-      console.error('Database connection unsuccessful!');
-      this.errorController.createErrorAlert('Error en la base de datos');
+    // if (this.databaseService.initDatabase()) {
+    //   this.initTimer();
+    //   console.log('Database connected successfully!');
+    // }
+    // else {
+    //   console.error('Database connection unsuccessful!');
+    //   this.errorController.createErrorAlert('Error en la base de datos');
+    // }
+  }
+
+  async ngOnInit() {
+    try {
+      await this.databaseService.initDatabase();
+    } catch(err) {
+      this.errorController.createErrorAlert(err);
     }
   }
 

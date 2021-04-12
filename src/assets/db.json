@@ -1,0 +1,26 @@
+{
+    "database": "multiTimer",
+    "version": 1,
+    "encrypted": false,
+    "mode": "full",
+    "tables": [
+        {
+            "name": "counters",
+            "schema": [
+                { "column": "id", "value": "INTEGER PRIMARY KEY NOT NULL" },
+                { "column": "title", "value": "TEXT" },
+                { "column": "endTime", "value": "DATETIME NOT NULL"}
+            ]
+        },
+        {
+            "name": "presets",
+            "schema": [
+                { "column": "id", "value": "INTEGER PRIMARY KEY NOT NULL" },
+                { "column": "title", "value": "TEXT NOT NULL" },
+                { "column": "hours", "value": "INTEGER DEFAULT 0" },
+                { "column": "minutes", "value": "INTEGER DEFAULT 0" },
+                { "column": "seconds", "value": "INTEGER DEFAULT 0" }
+            ]
+        }
+    ]
+}

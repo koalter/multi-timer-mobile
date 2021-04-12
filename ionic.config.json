@@ -1,5 +1,7 @@
 {
   "name": "multi-timer",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
